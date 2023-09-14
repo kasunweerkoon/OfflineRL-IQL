@@ -1,0 +1,85 @@
+{
+    "os": "Linux-5.15.0-76-generic-x86_64-with-debian-bullseye-sid",
+    "python": "3.7.13",
+    "heartbeatAt": "2023-09-13T07:35:32.563582",
+    "startedAt": "2023-09-13T07:35:32.073020",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "main_iql.py",
+    "codePath": "main_iql.py",
+    "git": {
+        "remote": "https://github.com/Manchery/iql-pytorch.git",
+        "commit": "3139e32ea7bf32984c5ca97d6f773ef51c076196"
+    },
+    "email": "kasun.weerakoonkm@gmail.com",
+    "root": "/home/kasun/offlineRL/IQL/iql-pytorch",
+    "host": "kasun",
+    "username": "kasun",
+    "executable": "/home/kasun/anaconda3/envs/iql/bin/python",
+    "cpu_count": 4,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 3208.004875,
+        "min": 1200.0,
+        "max": 3900.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 3900.0
+        },
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 3900.0
+        },
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 3900.0
+        },
+        {
+            "current": 2224.707,
+            "min": 1200.0,
+            "max": 3900.0
+        },
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 3900.0
+        },
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 3900.0
+        },
+        {
+            "current": 1839.332,
+            "min": 1200.0,
+            "max": 3900.0
+        },
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 3900.0
+        }
+    ],
+    "disk": {
+        "total": 233.17998886108398,
+        "used": 204.2183074951172
+    },
+    "gpu": "NVIDIA TITAN Xp",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA TITAN Xp",
+            "memory_total": 12884901888
+        }
+    ],
+    "memory": {
+        "total": 31.030895233154297
+    }
+}
