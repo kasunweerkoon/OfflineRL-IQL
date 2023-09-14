@@ -149,7 +149,7 @@ class OffRL_Inference:
 		#model params
 		self.path = '/media/kasun/Media/offRL/dataset/' #'/home/kasun/offlineRL/dataset/'
 
-		self.model_path = '/home/spotcore/kasun_ws/src/offlineRL' #'/home/kasun/offlineRL/CQL/CQL-SAC/'
+		self.model_path = '/home/kasun/offlineRL/IQL/iql-pytorch/' #'/home/kasun/offlineRL/CQL/CQL-SAC/'
 		self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 		self.config = get_config()
@@ -157,7 +157,7 @@ class OffRL_Inference:
 
 		# Loading the trained CQL_SAC model
 		self.agent = IQL(state_dim= 3,
-                        action_dim= 3,
+                        action_dim= (3,1),
                         expectile = self.config.expectile,
                         discount = self.config.discount,
                         tau=self.config.tau,
@@ -174,7 +174,7 @@ class OffRL_Inference:
                         #target_action_gap=self.config.target_action_gap,
                         #device=self.device)
 
-		choice_model = int(input("Model number? 1 to 8 :"))
+		choice_model = int(input("Model number? 1 to 6 :"))
 		
 		if choice_model ==1:
 			model_name = 'iql_sep13k_40'
@@ -193,12 +193,9 @@ class OffRL_Inference:
 
 		self.agent.load_state_dict(torch.load(os.path.join(self.model_path,'trained_models/'+model_name+'.pkl')))
 		# self.agent.load_state_dict(torch.load(os.path.join(self.model_path,'trained_models/offrl_aug26_'+str(100)+'.pkl')))
-		self.agent.eval()
+		# self.agent.eval(self.device)
 
 		print("Offline RL Model loaded")
-
-
-
 
 
 	def goal_callback(self, data):
@@ -285,15 +282,15 @@ class OffRL_Inference:
 			# q1 = self.agent.critic1(states, actions)
 			# q2 = self.agent.critic2(states, actions)
 
-			policy_out_action = self.agent.select_action(states, eval=True)
+			policy_out_action = self.agent.select_action(states)
 			#policy_out_action = self.agent.get_action(states, eval=True)
 
-			# print("policy actions :",policy_out_action[0][0])
+			print("policy actions :",policy_out_action)
 
-			self.pub_action.linear.x = np.clip(policy_out_action[0][0],-0.7,0.8)
-			self.pub_action.linear.y = np.clip(policy_out_action[0][1],-0.5,0.5)
-			self.pub_action.angular.z = np.clip(policy_out_action[0][2],-0.4,0.4)
-			print("policy actions Vx , Vy, Wz :",np.clip(policy_out_action[0][0],-0.7,0.8),np.clip(policy_out_action[0][1],-0.5,0.5),np.clip(policy_out_action[0][2],-0.4,0.4))
+			self.pub_action.linear.x = np.clip(policy_out_action[0],-0.7,0.8)
+			self.pub_action.linear.y = np.clip(policy_out_action[1],-0.5,0.5)
+			self.pub_action.angular.z = np.clip(policy_out_action[2],-0.4,0.4)
+			# print("policy actions Vx , Vy, Wz :",np.clip(policy_out_action[0][0],-0.7,0.8),np.clip(policy_out_action[0][1],-0.5,0.5),np.clip(policy_out_action[0][2],-0.4,0.4))
 
 
 			if self.pub_end2end_action == 1:

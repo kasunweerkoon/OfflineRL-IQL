@@ -6,13 +6,12 @@ import os
 from actor import Actor
 from critic import Critic, ValueCritic
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def loss(diff, expectile=0.8):
     weight = torch.where(diff > 0, expectile, (1 - expectile))
     return weight * (diff**2)
 
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 class IQL(nn.Module):
@@ -26,6 +25,8 @@ class IQL(nn.Module):
         temperature,
     ):
         super(IQL, self).__init__()
+
+        
 
         self.actor = Actor(state_dim, action_dim[0], 256).to(device)
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=3e-4)
@@ -102,7 +103,7 @@ class IQL(nn.Module):
         # logger.log('train/adv', (q - v).mean(), self.total_it)
 
     def select_action(self, state):
-        state = torch.FloatTensor(state.reshape(1, -1)).to(device)
+        # state = torch.FloatTensor(state.reshape(1, -1)).to(device)
         return self.actor.get_action(state).cpu().data.numpy().flatten()
 
     def train(self, experience, device, batch_size=256, logger=None):
